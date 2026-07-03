@@ -6,7 +6,7 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  ECS_CLUSTER: innovatech-cluster
+  ECS_CLUSTER: innovatech-cluster-final
 
 jobs:
   deploy:
@@ -39,7 +39,7 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./Springboot-API-REST-DESPACHO
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-    # 2. BACKEND VENTAS (¡Agregado aquí!)
+    # 2. BACKEND VENTAS
     - name: Build and Push Ventas Backend
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -49,12 +49,12 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./Springboot-API-REST-VENTAS
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-    # 3. FRONTEND
+    # 3. FRONTEND (Corregido a la ruta de tu proyecto)
     - name: Build and Push Frontend
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: innovatech-frontend
         IMAGE_TAG: latest
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./React-Frontend
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./front_despacho
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
